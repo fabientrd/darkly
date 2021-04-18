@@ -1,0 +1,17 @@
+Cliquer sur le copyright en bas de page du site nous redirige vers une nouvelle page.
+Si l’on inspect cette dernière, nous pouvons observer un long commentaire présent dans le code.
+Deux éléments attirent notre attention:
+
+Le premier: « You must cumming from : "https://www.nsa.gov/" to go to the next step »
+Le second: « Let's use this browser : "ft_bornToSec". It will help you a lot. »
+
+L’interprétation serait la suivante: « Accéder au site en indiquant une provenance, source à savoir « https://www.nsa.gov/«  et en précisant que le navigateur est « ft_bornTosec »
+
+De manière générale, lorsque nous naviguons de site web en site web, les requêtes HTTP indiquent dans leurs en-têtes plusieurs données, notamment le site dont on provient (le referer) et le navigateur utilisé (user-agent); Ces données peuvent être utiles pour des statistiques mais également à des fins de sécurité.
+
+Ainsi, nous allons accéder à notre en précisent le REFERER et l’USER AGENT grâce à la commande curl suivante: 
+
+curl --referer 'https://www.nsa.gov/' --user-agent 'ft_bornToSec' http://192.168.1.82/\?page\=e43ad1fdc54babe674da7c7b8f0127bde61de3fbe01def7d00f151c2fcca6d1c | grep flag
+
+Notre grep à bien trouvé le FLAG. La faille à mettre en évidence serait donc l’absence de politique de referer (referrer-Policy) sur notre site. Pour définir la Referrer-Policy, plusieurs solution comme la configuration d’apache, via un fichier .htaccess ou bien la configuration du vhost.
+

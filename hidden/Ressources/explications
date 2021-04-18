@@ -1,0 +1,27 @@
+La plupart des sites utilisent un fichier robots.txt qui est a la racine du site.
+En entrant l'url <IP>/robots.txt nous obtenons la sortie suivante :
+User-agent: *
+Disallow: /whatever
+Disallow: /.hidden
+Les user-agents sont les robots des moteurs recherches : ici tous.
+Disallow est l’instruction qui interdit aux user-agents l’accès à une url ou à un dossier.
+Ici aux dossiers /.hidden et /whatever
+Nous avons deja traite le dossier whatever grace a dirb dans le dossier htpasswd
+Interessons nous donc au dossier /.hidden
+Lorsque l'on accede a ce dossier il nous apparait une multitude de sous-dossiers
+Nous allons les recuperer afin de les etudiers de facon plus efficace sur notre terminal grace a la commande suivante : wget -r -np -e robots=off -R http://<IP>/.hidden/
+### Explication de la commande : 
+-r cree une hierarchie des repertoires avec comme racine /.hidden/
+-np empeche de remonter dans les repertoires parents a celui prit en tant que racine de la hierarchie
+-e execute une commande comme si elle faisait partie du fichier de configuration .wgetrc present dans le dossier /etc/. Dans ce fichier l'option robots=on ce qui signifie que le fichier robots.txt est prit en compte. En passant robots=off on ignore le fichier robots.txt et on aura donc acces a l'url
+
+Nous constatons qu'il y a des fichiers README et index.html
+Pour spécifier la liste (avec la virgule comme séparateur) des suffixes ou modèles de noms de fichiers qui doivent être acceptés ou rejetés on rajoute -R a la commnde wget avec le suffixe qu'on veut rejeter. 
+
+Quand on en affiche celui a la racine nous avons : Tu veux de l'aide ? Moi aussi !
+
+Le flag se trouve surement dans l'un de ces fichiers. On va donc le chercher avec la commande grep -r qui va lire dans les fichiers de maniere recursive avec differents pattern comme 'flag' par exemple
+
+Apres plusieurs essais on trouve : whtccjokayshttvxycsvykxcfm/igeemtxnvexvxezqwntmzjltkt/lmpanswobhwcozdqixbowvbrhw/README:99dde1d35d1fdd283924d84e6d9f1d820
+
+Afin d'eviter cela il faudrait eviter de mettre dans ce genre de fichier des donnees sensibles particulierement quand ils sont presents dans le fichier robots.txt qui peut donner envie de fouiller dedans

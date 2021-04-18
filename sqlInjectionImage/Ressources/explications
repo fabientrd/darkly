@@ -1,0 +1,13 @@
+Sur la page searchimg il y a un input afin de chercher une image par son ID
+En essayant une simple injection SQL de type '1 or 1 = 1' qui est la condition toujours vraie, nous avons un retour qui correspond aux nom des images et des URL.
+
+Afin de connaitre les table_name et columns_name je rentre la commande suivante : 
+"1 or 1 = 1 union select table_name, column_name from information_schema.columns". Cette commnde va faire une requete sur les metadonnees de la BDD et je vais donc obtenir tout les informations sur les tables et les colonnes associées.
+
+Interessons nous a la table list_images. Les colonnes associees sont id, url, title et  comment.
+
+Je rentre la commande suivante : 1 OR 1=1 UNION SELECT id, CONCAT(url,title,comment) FROM `list_images` afin d'avoir les informations concernant toutes les colonnes de la table list_images.
+
+En inspectant un peu le retour nous voyons : borntosec.ddns.net/images.pngHack me ?If you read this just use this md5 decode lowercase then sha256 to win this flag ! : 1928e8083cf461a51303633093573c46
+
+En suivant les directives nous obtenons le flag !

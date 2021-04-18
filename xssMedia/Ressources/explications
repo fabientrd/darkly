@@ -1,0 +1,11 @@
+Sur la page d'accueil au niveau de la photo de la NSA en passant la souris au dessus il y a une redirection vers la page /?page=media qui affiche la meme image, etonnant. Sur cette page en inspectant l'image nous remarquons qu'elle est dans une balise object et non image. 
+Interessons nous a la balise object : Lorsque nous modifions la valeur de 'src' nous remarquons que la valeur de data dans la balise objet est elle meme modifiée. Il pourrait s'agir la d'une evetuelle faille XSS qui permettrait d'injecter du code malveillant grace a cette balise objet.
+
+
+En essayant de mettre tout simplement <script>alert()</script> rien ne se passe mais la valeur de data a été set a <script>alert()</script>. Il n'y a donc pas de traitement des donnees envoyées dans le GET avant de set la valeur de data dans la balise <object>. Si un autre utilisateur lance une requete sur une URL malveillante, le script est supposé s'executer.
+L'attaquant pourrait alors voir les informations que la victime peut voir, modifier n'importe quel information que l'utilisateur est autorise a modifier ou meme initier des interactions avec d'autres utilisateurs.
+
+En encodant notre script '<script>alert()</script>' en base 64 ce qui nous donne PHNjcmlwdD5hbGVydCgpPC9zY3JpcHQ+ et en settant manuelle la valeur de src dans l'url avec src=data:text/html;base64,PHNjcmlwdD5hbGVydCgpPC9zY3JpcHQ+ nous arrivons sur le flag. Cette petite ligne va donc set la valeur de data de la balise <object> a <script>alert()</script> encodant en base64. Bien sur du code plus poussé pourrait etre injecté.
+
+
+Afin de pallier a ce probleme il faut check tous les points d'entree ou pour notre cas particulier utiliser une balise image et non object

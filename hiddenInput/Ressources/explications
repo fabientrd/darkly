@@ -1,0 +1,4 @@
+Sur la page recover du site en ouvrant l'inspecteur nous voyons un hiden input avec en valeur webmaster@borntosec.com. En modifiant cette valeur la mail ne sera pas envoye a cette adresse mais a l'adresse de l'attaquant. 
+Nous changeons donc l'adresse mail par une adresse random puis validons ce qui va nous fournir le flag.
+
+Afin de se proteger de cela il faudrait eviter de mettre des hidden input et surtout des hidden input qui contiennent en clair une donnee sensible telle qu'une adresse mail qu'on pourra modifier. Il faudrait demander a l'utilisateur de fournir lui meme son adresse mail et faire un check cote serveur pour voir si cette adresse existe bien

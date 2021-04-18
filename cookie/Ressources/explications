@@ -1,0 +1,14 @@
+En utilisant nikto qui est un scanner de vulnerabilite web present sur KALI avec la commande **nikto -h <IP:PORT> -evasion 1** le programme nous retourne quelque chose dinteressant : Cookie I_am_admin created without the httponly flag
+Cela signifie que l'on peut afficher le cookie cote client
+
+Dans la console de l'inspecteur nous entrons la comande : document.cookie qui va nous afficher le cookie I_am_admin et qui a la valeur 68934a3e9455fa72420237eb05902327
+
+En decryptant ce hash nous avons la valeur 'false'
+Cela pourrait etre utilise pour savoir si l'admin est connecte ou pas
+Nous essayons donc de set la valeur du cookie a true. On va donc hasher en md5 'true' ce qui va nous donner b326b5062b2f0e69046810717534cb09
+
+On entre la commande suivante dans la console de notre navigateur afin de changer la valeur du cookie : document.cookie = "I_am_admin=b326b5062b2f0e69046810717534cb09"
+
+On refresh la page et nous obtenons le flag
+
+Afin d'eviter cela il faudra bien utiliser le flag httponly lors de la creation de cookies

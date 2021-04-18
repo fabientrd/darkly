@@ -1,0 +1,5 @@
+Sur la page survey du site il y a un formulaire avec differents select.
+Grace a l'inspecteur nous pouvons changer la valeur d'un select, mettons pas exemple 100 a la valeur 10 du premier select. En choisissant le 10 nous envoyons a la base de donnee une valeur innatendue ce qui nous affiche le flag : 
+THE FLAG IS 03A944B434D5BAFF05F46C4BEDE5792551A2595574BCAFC9A6E25F67C382CCAA
+
+Afin d'eviter ce genre de comportement il faudra securiser les valeurs des select dans le back afin de ne gerer que les valeurs attendues et rediriger sur cette meme page sans traiter la valeur si elle a ete modifiee

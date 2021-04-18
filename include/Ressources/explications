@@ -1,0 +1,8 @@
+La faille include aussi appelee Local File Inclusion ou Remote File Inclusion permet d'inclure un fichier au sein d'une ressouce accessible depuis un systeme d'information.
+
+Dans notre cas nous avons pu constater dans l'url la presence dans le GET de la valeur 'page'. Lorsque nous nous amusons a changer cette valeur, si la page n'existe pas le navigateur nous renvoie une alert avec un message.
+
+L'objectif ici serait donc d'essayer de remonter l'arborescence afin d'acceder a un fichier sensible tel que celui contenant les mots de passes. La méthode la plus simple consiste à passer en paramètre une chaîne correspondant à un chemin d’accès (ou path) qui pointera hors du dossier racine du projet web. Ce dossier est configuré dans le virtual host du serveur web
+Essayons donc de set la valeur de 'page' a "../../../../../../etc/passwd". Lorsque nous faison cela nous accedons au flag
+
+Afin d'eviter ce genre de faille il faut filtrer et valider les entrees utilisateurs. Il ne faut jamais inclure/executer une entree utilisateur

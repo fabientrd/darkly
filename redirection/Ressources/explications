@@ -1,0 +1,5 @@
+Dans le footer nous remarquons que les 3 icones de reseaux sociaux sont des redirections vers les sites en question et non un lien pointant vers ces memes sites. De ce fait il est tout a fait possible de rediriger vers n'importe quel site. 
+
+Lorsque l'on change la valeur de la variable site et que nous cliquons sur l'icone, nous obtenons donc le flag
+
+Afin d'eviter cela il faudrait tout simplement soit verifier la valeur de la variable site cote serveur ou alors  mettre un lien sans faire une redirection.

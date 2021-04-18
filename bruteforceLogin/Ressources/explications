@@ -1,0 +1,15 @@
+La page signIn semble permettre une connexion grâce à un formulaire login/password. En effet, apres plusieurs essais le site ne nous bloque pas l'acces.
+
+Nous allons essayer de trouver ces identifiants au travers d’une méthode bruteforce par dictionnaire. Pour ce faire, nous avons créé  un script shell qui va tester, au travers de requête POST par la commande curl, toutes les combinaisons login/password, présent dans leurs dictionnaires respectifs. Ces dictionnaires ont volontairement été allégés afin de réduire le nombre de tentatives. Ils comprennent des login / password les plus courants sur internet, rassemblées et récupérées sur des sites spécifiques qui sensibilisent à la sécurité notamment sur le choix de ces derniers.
+
+Lançons la commande suivant: sh script.sh {addreseIp}
+
+Plusieurs combinaisons d’identifiants possibles, nous en avons retenu deux:
+login: admin | mdp: shadow
+login: root | mdp: shadow
+
+
+La connexion grace à ces identifiants nous permet d’obtenir le flag
+
+Afin de pallier a ce probleme il faudrait limiter le nombre de tentative apres un certain nombre d'echec en bloquant l'IP ou set un intervalle de temps
+

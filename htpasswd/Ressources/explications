@@ -1,0 +1,6 @@
+En utilisant dirb http://<ip_vm> on tombe sur une route qui s'appelle /whatever/htpasswd 
+En ouvrant ce fichier sur un paire de cle user password pour le root avec un mdp hash : 8621ffdbc5698829397d97767ac13db3
+
+En utilisant John The Ripper on arrive a avoir le mot de passe qui est 'dragon'
+
+Afin de palier a ce probleme il faudrait proteger tous les fichiers contenant des informations sensibles et les rendre innaccessibles aux utilisateurs.

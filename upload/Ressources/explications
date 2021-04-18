@@ -1,0 +1,14 @@
+Sur la page <IP>/?page=upload nous pouvons uploader un fichier cote client sur le serveur. Ces systemes d'uload presentent parfois des vulnerabilite.  Le but de cette faille est d’uploader un fichier avec une extension non autorisée. (Par exemple un code php) de façon à avoir un accès au serveur cible.
+Il existe differentes failles d'upload comme la double extension qui consiste a uploader un fichier avec deux extensions ex: hack.php.png et presentes sur apache notamment qui lit les fichiers php et png.
+En essayant d'upload un fichier avec une double extension l'upload echoue meme en desactivant le javascript avec le debuggeur.
+Une autre faille est celle du type MIME qui va permettre de bypasser la verification MIME en changeant la valeur du POST ce qui peut etre fait grace a TemperData disponible sur Firefox ou en utilisant curl
+
+En utilisant curl nous pouvons envoyer une requete POST en definissant nous meme les valeurs du POST. De ce fait en observant les valeurs du bouton UPLOAD nous pouvons voir qu'il y a deux valeurs qui sont name et type.
+
+En rentrant la commande curl suivante nous pouvons envoyer un fichier php et definissant le type a jpegen utilisant une requete POST : curl -X POST 'http://10.19.1.60/?page=upload' -F 'uploaded=@<PATH>/hack.php;type=image/jpeg' -F 'Upload=Upload' 
+-X indiaue la methode utilise, ici POST la methode GET etant la methode utilisee par defaut avec curl--F Cela permet à curl d'émuler un formulaire rempli dans lequel un utilisateur a appuyé sur le bouton d'envoi. Ici nous envoyons dans uploaded notre script php et definissons le type comme image/jpeg
+Le @ force le contenu a etre identifie comme un fichier et le joint comme telechargement.
+
+L'injection ayant reussie avec un grep flag nous recuperons le flag : 46910d9ce35b385885a9f7e2b336249d622f29b267a1771fbacf52133beddba8
+
+Afin d'eviter ce genre d'upload malveillant de script il faut bien verifier le type de fichier upload en precisant les differents type MIME attendus
